@@ -1,26 +1,35 @@
-package com.example.logging
+package pr.com.logging
 
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
+
+    val TAG_LOG = "From EditText"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if(BuildConfig.DEBUG){
+            Timber.plant(Timber.DebugTree())
+        }
+
         val editText = findViewById<EditText>(R.id.edit_text)
-        val showText = Toast.makeText(this,editText.text, Toast.LENGTH_LONG).show()
         val buttonLog = findViewById<Button>(R.id.button_log)
         val buttonTimber = findViewById<Button>(R.id.button_timber)
 
         buttonLog.setOnClickListener{
-            val TAG_LOG = "From EditText"
-            Log.v(TAG_LOG, showText.toString())
+            Log.v(TAG_LOG, editText.text.toString())
         }
-      //  buttonTimber.setOnClickListener()
+        buttonTimber.setOnClickListener{
+            Timber.v(editText.text.toString())
+        }
+
+
     }
 }
