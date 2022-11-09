@@ -9,14 +9,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var button_save = (findViewById<Button>(R.id.button_save))
-        var progressBar = (findViewById<ProgressBar>(R.id.progressBar))
-        var editText = (findViewById<EditText>(R.id.editText))
-        var textView = (findViewById<TextView>(R.id.textView))
-        var checkBox = (findViewById<CheckBox>(R.id.checkBox))
-        button_save.setOnClickListener{
+        val buttonSave = (findViewById<Button>(R.id.button_save))
+        val checkBox = (findViewById<CheckBox>(R.id.checkBox))
+        val editText = (findViewById<EditText>(R.id.editText))
+        val progressBar = (findViewById<ProgressBar>(R.id.progressBar))
+        val textView = (findViewById<TextView>(R.id.textView))
+        
+        buttonSave.setOnClickListener{
             if (checkBox.isChecked) {
-                textView.setText(editText.getText())
+                textView.text = editText.text
                 progressBar.incrementProgressBy(10)
             }
         }
