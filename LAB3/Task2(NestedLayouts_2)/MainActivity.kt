@@ -9,7 +9,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var clickCounter : Int = 0
+        var clickCounter = 0
         setContentView(R.layout.activity_main)
         val buttonRoll = (findViewById<Button>(R.id.button_roll))
         buttonRoll.setOnClickListener {
@@ -29,36 +29,37 @@ class MainActivity : AppCompatActivity() {
         val text32 = (findViewById<TextView>(R.id.text32))
         val text33 = (findViewById<TextView>(R.id.text33))
 
-        val intText11 = text11.text.toString().toIntOrNull()
-        val intText12 = text12.text.toString().toIntOrNull()
-        val intText13 = text13.text.toString().toIntOrNull()
-
-        fun addOne(x: Int) = x + 1
-
-        if (clickCounter == 1) {
-            text12.text = clickCounter.toString()
+        if (clickCounter % 3 == 2) {
             text11.text = ""
-            text22.text = clickCounter.toString()
-            text21.text = ""
-            text32.text = clickCounter.toString()
-            text31.text = ""
-        }
-        if (clickCounter == 2) {
-            val count = addOne(intText12).toString()
-            text13.text = count
-            text12.text = ""
-            text23.text = count
-            text22.text = ""
-            text33.text = count
-            text32.text = ""
-        }
-        if (clickCounter == 3) {
-            val count = addOne(intText13).toString()
-            text11.text = count
+            text12.text = clickCounter.toString()
             text13.text = ""
-            text21.text = count
+            text21.text = ""
+            text22.text = clickCounter.toString()
             text23.text = ""
-            text31.text = count
+            text31.text = ""
+            text32.text = clickCounter.toString()
+            text33.text = ""
+        }
+        if (clickCounter % 3 == 0) {
+            text11.text = ""
+            text12.text = ""
+            text13.text = clickCounter.toString()
+            text21.text = ""
+            text22.text = ""
+            text23.text = clickCounter.toString()
+            text31.text = ""
+            text32.text = ""
+            text33.text = clickCounter.toString()
+        }
+        if (clickCounter % 3 == 1) {
+            text11.text = clickCounter.toString()
+            text12.text = ""
+            text13.text = ""
+            text21.text = clickCounter.toString()
+            text22.text = ""
+            text23.text = ""
+            text31.text = clickCounter.toString()
+            text32.text = ""
             text33.text = ""
         }
     }
