@@ -14,11 +14,16 @@ class MainActivity : AppCompatActivity() {
         val editText = (findViewById<EditText>(R.id.editText))
         val progressBar = (findViewById<ProgressBar>(R.id.progressBar))
         val textView = (findViewById<TextView>(R.id.textView))
-        
+
         buttonSave.setOnClickListener{
             if (checkBox.isChecked) {
                 textView.text = editText.text
-                progressBar.incrementProgressBy(10)
+                checkBox.isChecked = false
+                if (progressBar.progress == 100)
+                    progressBar.progress = 10
+                else{
+                    progressBar.progress =  progressBar.progress + 10
+                }
             }
         }
     }
