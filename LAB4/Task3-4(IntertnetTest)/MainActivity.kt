@@ -13,6 +13,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
+    private val url = URL("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=ff49fcd4d4a08aa6aafb6ea3de826464&tags=cat&format=json&nojsoncallback=1")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -20,16 +21,15 @@ class MainActivity : AppCompatActivity() {
         val btnHTTP = findViewById<Button>(R.id.btnHTTP)
         btnHTTP.setOnClickListener {
             val thread = Thread {
-                val url1 = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=ff49fcd4d4a08aa6aafb6ea3de826464&tags=cat&format=json&nojsoncallback=1"
                 var urlConnection: HttpURLConnection? = null
                 val reader: BufferedReader? = null
                 try {
-                    urlConnection = URL(url1).openConnection() as HttpURLConnection
+                    urlConnection = url.openConnection() as HttpURLConnection
                     urlConnection.requestMethod = "GET"
                     urlConnection.connect()
                     val inputStream = urlConnection.inputStream
                     val a = inputStream.bufferedReader().use {it.readText() }
-                    Log.i("Flickr cats", a)
+                    Log.v("Flickr cats", a)
                 } catch (e: IOException) {
                     Log.e("Request", "Error ", e)
                     return@Thread
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
                 try {
                     val response: Response = client.newCall(request).execute()
-                    Log.i("Flickr OkCats", response.body!!.string())
+                    Log.i("Flickr OkCats", response.body()!!.string())
                 } catch (e: IOException) {
                     Log.e("Flickr OkCats Error", "Error ", e)
                 }
