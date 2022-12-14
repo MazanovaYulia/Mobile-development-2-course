@@ -1,89 +1,143 @@
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+package com.example.mydialer7
+
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import timber.log.Timber
-import timber.log.Timber.Forest.plant
-import java.io.InputStream
-
+import com.google.gson.reflect.TypeToken
 
 class MainActivity : AppCompatActivity() {
+    private val phones = "[\n" +
+            "  {\n" +
+            "    \"name\": \"(Приёмная)\",\n" +
+            "    \"phone\": \"+375 (2239) 7-17-80\",\n" +
+            "    \"type\": \"\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(Бухгалтерия)\",\n" +
+            "    \"phone\": \"+375 (2239) 7-17-64\",\n" +
+            "    \"type\": \"\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(Бухгалтерия)\",\n" +
+            "    \"phone\": \"+375 (2239) 7-18-08\",\n" +
+            "    \"type\": \"\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(Юридическое бюро)\",\n" +
+            "    \"phone\": \"+375 (2239) 7-17-63\",\n" +
+            "    \"type\": \"\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(Отдел правовой и кадровой работы)\",\n" +
+            "    \"phone\": \"+375 (2239) 7-17-93\",\n" +
+            "    \"type\": \"\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(Отдел материально-технического снабжения)\",\n" +
+            "    \"phone\": \"+375 (2239) 7-18-12\",\n" +
+            "    \"type\": \"\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"\",\n" +
+            "    \"phone\": \"+375 44 712 36 26\",\n" +
+            "    \"type\": \"Сектор сбыта бумаги\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(Реализация на внутренний рынок)\",\n" +
+            "    \"phone\": \"+375 (2239) 7-17-79\",\n" +
+            "    \"type\": \"Сектор сбыта бумаги\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(Реализация на внешний рынок)\",\n" +
+            "    \"phone\": \"+375 (2239) 4-11-77\",\n" +
+            "    \"type\": \"Сектор сбыта бумаги\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(Реализация на внутренний рынок)\",\n" +
+            "    \"phone\": \"+375 (2239) 7-18-25\",\n" +
+            "    \"type\": \"Сектор сбыта бумаги\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"\",\n" +
+            "    \"phone\": \"+375 44 580 09 70\",\n" +
+            "    \"type\": \"Сектор сбыта продукции деревообработки\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(Реализация продукции деревообработки)\",\n" +
+            "    \"phone\": \"+375 (2239) 7-18-42\",\n" +
+            "    \"type\": \"Сектор сбыта продукции деревообработки\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(Реализация продукции деревообработки)\",\n" +
+            "    \"phone\": \"+375 (2239) 3-64-71\",\n" +
+            "    \"type\": \"Сектор сбыта продукции деревообработки\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"\",\n" +
+            "    \"phone\": \"+375 29 352 25 20\",\n" +
+            "    \"type\": \"Реализация домов, бань, беседок, клеёного бруса\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"\",\n" +
+            "    \"phone\": \"+375 (2239) 7-18-43\",\n" +
+            "    \"type\": \"Реализация домов, бань, беседок, клеёного бруса\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(приемная)\",\n" +
+            "    \"phone\": \"+375 (2239) 7-17-80\",\n" +
+            "    \"type\": \"Факс\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(отдел сбыта)\",\n" +
+            "    \"phone\": \"+375 (2239) 7-17-79\",\n" +
+            "    \"type\": \"Факс\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(отдел материально-технического снабжения)\",\n" +
+            "    \"phone\": \"+375 (2239) 7-17-82\",\n" +
+            "    \"type\": \"Факс\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"(служба главного энергетика)\",\n" +
+            "    \"phone\": \"+375 (2239) 7-18-06\",\n" +
+            "    \"type\": \"Факс\"\n" +
+            "  }\n" +
+            "]" +
+            ""
+    private val adapter: ContactAdapter = ContactAdapter { number ->
+        val callIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number"))
+        startActivity(callIntent)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        plant(Timber.DebugTree())
+        val recyclerView = findViewById<RecyclerView>(R.id.r_view)
+        val searchEditText = findViewById<EditText>(R.id.et_search)
 
-        var json: String?
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = adapter
 
-        val recyclerView: RecyclerView = findViewById(R.id.rView)
-        val button: Button = findViewById(R.id.btn_search)
-        val txt: EditText = findViewById(R.id.et_search)
-
-        val inp: InputStream = assets.open("phones.json")
-        json = inp.bufferedReader().use { it.readText() }.replace("\r\n", "")
-
-        val phones = Gson().fromJson(json, Array<Contact>::class.java).toList()
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = Adapter(this, phones as ArrayList<Contact>)
-
-
-        button.setOnClickListener {
-            if (txt.text.toString() != "") {
-                val newArray = ArrayList<Contact>()
-                for (i in phones.indices) {
-                    if (txt.text.toString() in phones[i].name || txt.text.toString() in phones[i].phone || txt.text.toString() in phones[i].type) {
-                        newArray.add(phones[i])
-                    }
-                }
-                recyclerView.adapter = Adapter(this, newArray)
+        val phonesType = object : TypeToken<List<Contact>>() {}.type
+        val phones = Gson().fromJson<List<Contact>>(phones, phonesType)
+        adapter.submitList(phones)
+        searchEditText.addTextChangedListener {
+            val filteredPhones = phones.filter { item ->
+                item.phone.contains(it.toString()) || item.name.contains(it.toString()) || item.type.contains(it.toString())
             }
-            else {
-                recyclerView.adapter = Adapter(this, phones)
-            }
-        }
-    }
-
-    data class Contact(
-        var name: String,
-        var phone: String,
-        var type: String,
-    )
-
-
-    class Adapter(
-        private val context: Context,
-        private val list: ArrayList<Contact>
-    ) : RecyclerView.Adapter<Adapter.ViewHolder>() {
-
-        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val name: TextView = view.findViewById(R.id.textName)
-            val phone: TextView = view.findViewById(R.id.textPhone)
-            val type: TextView = view.findViewById(R.id.textType)
+            adapter.submitList(filteredPhones)
+            val filterState = getSharedPreferences("app_preferences", MODE_PRIVATE).edit()
+            filterState.putString("SEARCH_FILTER", it.toString()).apply()
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(context).inflate(R.layout.rview_item, parent, false)
-            return ViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val data = list[position]
-            holder.name.text = data.name
-            holder.phone.text = data.phone
-            holder.type.text = data.type
-        }
-
-        override fun getItemCount(): Int {
-            return list.count()
-        }
+        val lastFilterText = getSharedPreferences("app_preferences", MODE_PRIVATE).getString("SEARCH_FILTER","")
+        searchEditText.append(lastFilterText)
     }
 }
