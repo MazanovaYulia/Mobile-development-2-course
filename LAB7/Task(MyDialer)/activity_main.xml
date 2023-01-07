@@ -19,7 +19,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/r_view"
+        android:id="@+id/rView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
