@@ -1,12 +1,5 @@
-package com.example.mydialer7
+package com.example.mydialer2
 
-import com.google.gson.annotations.SerializedName
-
-data class Contact(
-    @SerializedName("name")
-    val name: String,
-    @SerializedName("phone")
-    val phone: String,
-    @SerializedName("type")
-    val type: String
-)
+class Contact (var name: String, 
+               var phone: String, 
+               var type: String){}
