@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:orientation="horizontal"
+    android:layout_marginTop="5dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:background="@drawable/rv_item_bg" >
+
+    <RelativeLayout
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/char_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:strokeWidth="5dp"
+            app:strokeColor="@color/stroke_color"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.Chip" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/status_icon"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_alignParentEnd="true"
+            android:padding="1dp"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/stroke_color"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.Button" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp">
+
+        <TextView
+            android:id="@+id/char_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/char_species"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/char_origin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
